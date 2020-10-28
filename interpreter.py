@@ -191,19 +191,19 @@ def scan(lignes: list):
                     exit()
                 else:
                     pass
-        if 'DORS' in ligne:
+        if 'dors' in ligne:
             listDORS = []
             ans = False
-            ans = CHEZCFIRST("DORS", ligne)
+            ans = CHEZCFIRST("dors", ligne)
             if ans == True:
                 try:               
                     bon = int(" ".join(split_ligne[1]))
                 except:
-                    print("ERREUR 3 : Mauvaise SYNTAXE pour DORS : DORS + TEMPS // exemple : DORS 2")
+                    print("ERREUR 3 : Mauvaise SYNTAXE pour DORS : DORS + TEMPS // exemple : dors 2")
                 try:
                     listDORS = split_ligne
                     listDORS.remove(str(bon))
-                    listDORS.remove("DORS")
+                    listDORS.remove("dors")
                     arg = lts(listDORS)
                 except:
                     print("DORS ARG : IMPOSSIBLE DE CONVERTIR EN LITTERAIRE ")
