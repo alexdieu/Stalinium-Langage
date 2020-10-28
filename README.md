@@ -8,6 +8,7 @@ Ce langage est un langage très simple , avec pour l'instant 4 instructions :
 - **SI** , retourne vrai ou faux en foction de la condition : ```?=``` ```!=``` ```<``` ```>``` ```<=``` ```>=``` exemple : ```si 4 ?= 5``` en python ca donnerait ```if 4 == 5```
 - **SORTIR** , sors du code et de l'interpréteur ```SORTIR```
 - **DORS** , attendre .  syntaxe : DORS secondes {optionnel : afficher quelquechose a la fin du temps} exemple:``` dors 4 ```Autre exemple: (l'argument de fin agi comme ```MONTRE```) ```dors 5 dormir 5 sec```
+- **PAUSE** , attends que l'utilisateur tape la touche entrée pour continuer , syntaxe : pause {raison} exemple : ```pause``` ou ```pause ceci est une pause```
 
 POUR PLUS D'AIDE , REGARDEZ MAIN.CCCP ET VOUS COMPRENDREZ MIEUX LA SYNATXE
 
