@@ -1,5 +1,6 @@
 import sys
 import os.path
+import time
 
 print("STALINIUM V1 PAR ALEXDIEU")
 
@@ -23,6 +24,10 @@ try:
             lignes = [i for i in lignes if i] 
 except:
     lignes.append(file)
+    
+def lts(a):
+    lt = ""
+    return ' '.join(a)
     
 def CHEZCFIRST(mot, ligne):
     exitp = False
@@ -186,6 +191,31 @@ def scan(lignes: list):
                     exit()
                 else:
                     pass
+        if 'DORS' in ligne:
+            listDORS = []
+            ans = False
+            ans = CHEZCFIRST("DORS", ligne)
+            if ans == True:
+                try:               
+                    bon = int(" ".join(split_ligne[1]))
+                except:
+                    print("ERREUR 3 : Mauvaise SYNTAXE pour DORS : DORS + TEMPS // exemple : DORS 2")
+                try:
+                    listDORS = split_ligne
+                    listDORS.remove(str(bon))
+                    listDORS.remove("DORS")
+                    arg = lts(listDORS)
+                except:
+                    print("DORS ARG : IMPOSSIBLE DE CONVERTIR EN LITTERAIRE ")
+                    arg = ''
+                time.sleep(bon)
+                if arg != '':
+                    print(arg)
+                else:
+                    pass
+                bon = True
+            else:
+                pass
         else:
             if "if" in ligne:
                 if bon == True:
@@ -256,4 +286,4 @@ while True:
     else:
         lignes.append(file)
         scan(lignes)
-    
+        
