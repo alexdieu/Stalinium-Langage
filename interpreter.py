@@ -208,11 +208,11 @@ def scan(lignes: list):
                 except:
                     print("DORS ARG : IMPOSSIBLE DE CONVERTIR EN LITTERAIRE ")
                     arg = ''
-                time.sleep(bon)
                 if arg != '':
                     print(arg)
                 else:
                     pass
+                time.sleep(bon)
                 bon = True
             else:
                 pass
@@ -286,4 +286,3 @@ while True:
     else:
         lignes.append(file)
         scan(lignes)
-        
