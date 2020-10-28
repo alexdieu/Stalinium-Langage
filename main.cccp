@@ -1,7 +1,6 @@
 montre Salut, STALINE!
 calcul 3 ** 3
 si 6 <= 8
-DORS 1
-DORS 2 ron pisch
+dors 2 ron pisch
 pause après ca je quitte le prog
 sortir
