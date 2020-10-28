@@ -184,7 +184,6 @@ def scan(lignes: list):
             except:
                 exit()
             if exitp == True:
-                print(sec)
                 if sec.isspace() == True and  prem.isspace() == True:
                     exit()
                 elif sec == '' or sec == None and prem == '' or prem == None:
@@ -216,6 +215,26 @@ def scan(lignes: list):
                 bon = True
             else:
                 pass
+        if "pause" in ligne:
+            ans = False
+            ans = CHEZCFIRST("pause", ligne)
+            if ans == True:
+                pause = False
+                sec = ''
+                prem = ''
+                try:
+                    prem = ligne.partition("pause")[0]
+                    sec = ligne.partition("pause")[2]
+                    pause = True
+                except:
+                    input("Pause ...")
+                if pause == True:
+                    if prem.isspace() == True:
+                        input(sec + "...")
+                    elif prem == '' or prem == None:
+                        input(sec + "...")
+                    else:
+                        pass
         else:
             if "if" in ligne:
                 if bon == True:
