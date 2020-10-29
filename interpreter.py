@@ -64,82 +64,88 @@ def calc(ligne: list) -> float:
         else:
             check_if(ligne.split())
     except:
-        if "+" in ligne[1]:
-            prems = ligne[1].partition("+")[0]
-            sec = ligne[1].partition("+")[2]
-            ope = "+"
-            return("ERREUR 1 , les nombres doivent êtrent espacés de l\'opérateur comme ça : " + prems + " " + ope + " " + sec)
-        elif "-" in ligne[1]:
-            prems = ligne[1].partition("-")[0]
-            sec = ligne[1].partition("-")[2]
-            ope = "+"
-            return("ERREUR 1 , les nombres doivent êtrent espacés de l\'opérateur comme ça : " + prems + " " + ope + " " + sec)
-        elif "*" in ligne[1]:
-            prems = ligne[1].partition("*")[0]
-            sec = ligne[1].partition("*")[2]
-            ope = "*"
-            return("ERREUR 1 , les nombres doivent êtrent espacés de l\'opérateur comme ça : " + prems + " " + ope + " " + sec)
-        elif "/" in ligne[1]:
-            prems = ligne[1].partition("/")[0]
-            sec = ligne[1].partition("/")[2]
-            ope = "/"
-            return("ERREUR 1 , les nombres doivent êtrent espacés de l\'opérateur comme ça : " + prems + " " + ope + " " + sec)
-        elif "**" in ligne[1]:
-            prems = ligne[1].partition("**")[0]
-            sec = ligne[1].partition("**")[2]
-            ope = "**"
-            return("ERREUR 1 , les nombres doivent êtrent espacés de l\'opérateur comme ça : " + prems + " " + ope + " " + sec)
-        elif "//" in ligne[1]:
-            prems = ligne[1].partition("//")[0]
-            sec = ligne[1].partition("//")[2]
-            ope = "**"
-            return("ERREUR 1 , les nombres doivent êtrent espacés de l\'opérateur comme ça : " + prems + " " + ope + " " + sec)
-        else:
-            if tried2 == True:
-                return("ERREUR 2 , Opérateur inconnu ! : " + lignes[0])
+        try:
+            if "+" in ligne[1]:
+                prems = ligne[1].partition("+")[0]
+                sec = ligne[1].partition("+")[2]
+                ope = "+"
+                return("ERREUR 1 , les nombres doivent êtrent espacés de l\'opérateur comme ça : " + prems + " " + ope + " " + sec)
+            elif "-" in ligne[1]:
+                prems = ligne[1].partition("-")[0]
+                sec = ligne[1].partition("-")[2]
+                ope = "+"
+                return("ERREUR 1 , les nombres doivent êtrent espacés de l\'opérateur comme ça : " + prems + " " + ope + " " + sec)
+            elif "*" in ligne[1]:
+                prems = ligne[1].partition("*")[0]
+                sec = ligne[1].partition("*")[2]
+                ope = "*"
+                return("ERREUR 1 , les nombres doivent êtrent espacés de l\'opérateur comme ça : " + prems + " " + ope + " " + sec)
+            elif "/" in ligne[1]:
+                prems = ligne[1].partition("/")[0]
+                sec = ligne[1].partition("/")[2]
+                ope = "/"
+                return("ERREUR 1 , les nombres doivent êtrent espacés de l\'opérateur comme ça : " + prems + " " + ope + " " + sec)
+            elif "**" in ligne[1]:
+                prems = ligne[1].partition("**")[0]
+                sec = ligne[1].partition("**")[2]
+                ope = "**"
+                return("ERREUR 1 , les nombres doivent êtrent espacés de l\'opérateur comme ça : " + prems + " " + ope + " " + sec)
+            elif "//" in ligne[1]:
+                prems = ligne[1].partition("//")[0]
+                sec = ligne[1].partition("//")[2]
+                ope = "**"
+                return("ERREUR 1 , les nombres doivent êtrent espacés de l\'opérateur comme ça : " + prems + " " + ope + " " + sec)
             else:
-                check_if(ligne.split())
+                if tried2 == True:
+                    return("ERREUR 2 , Opérateur inconnu ! : " + lignes[0])
+                else:
+                    check_if(ligne.split())
+        except:
+            return "ERREUR 7 : AUCUN CALCUL DONNE"
 
 def check_if(ligne: list) -> float:
     args = []
     tried2 = True
-    for arg in ligne[1:]:
-        args.append(arg)
-    if args[1] == "?=":
-        if args[0] == args[2]:
-            return "Vrai"
+    try:
+        for arg in ligne[1:]:
+            args.append(arg)
+        if args[1] == "?=":
+            if args[0] == args[2]:
+                return "Vrai"
+            else:
+                return "Faux"
+        elif args[1] == "<":
+            if args[0] < args[2]:
+                return "Vrai"
+            else:
+                return "Faux"
+        elif args[1] == ">":
+            if args[0] > args[2]:
+                return "Vrai"
+            else:
+                return "Faux"
+        elif args[1] == "<=":
+            if args[0] <= args[2]:
+                return "Vrai"
+            else:
+                return "Faux"
+        elif args[1] == "!=":
+            if args[0] != args[2]:
+                return "Vrai"
+            else:
+                return "Faux"
+        elif args[1] == ">=":
+            if args[0] >= args[2]:
+                return "Vrai"
+            else:
+                return "Faux"
         else:
-            return "Faux"
-    elif args[1] == "<":
-        if args[0] < args[2]:
-            return "Vrai"
-        else:
-            return "Faux"
-    elif args[1] == ">":
-        if args[0] > args[2]:
-            return "Vrai"
-        else:
-            return "Faux"
-    elif args[1] == "<=":
-        if args[0] <= args[2]:
-            return "Vrai"
-        else:
-            return "Faux"
-    elif args[1] == "!=":
-        if args[0] != args[2]:
-            return "Vrai"
-        else:
-            return "Faux"
-    elif args[1] == ">=":
-        if args[0] >= args[2]:
-            return "Vrai"
-        else:
-            return "Faux"
-    else:
-        if tried2 == True:
-            return("ERREUR 2 , Opérateur inconnu ! : " + arg[0])
-        else:
-            calc(ligne.split())
+            if tried2 == True:
+                return("ERREUR 2 , Opérateur inconnu ! : " + arg[0])
+            else:
+                calc(ligne.split())
+    except:
+        return "ERREUR 7 AUCUNE CONDITION DONNE"
         
 
 def scan(lignes: list):
@@ -158,7 +164,7 @@ def scan(lignes: list):
                 pass
         if "calcul" in ligne:
             ans = False
-            ans = CHEZCFIRST("si", ligne)
+            ans = CHEZCFIRST("calcul", ligne)
             if ans == True:
                 print(calc(split_ligne))
                 bon = True
@@ -229,7 +235,6 @@ def scan(lignes: list):
                 except:
                     input("Pause ...")
                 if pause == True:
-                    bon = True
                     sec = sec[1:]
                     if prem.isspace() == True:
                         input(sec + "...")
@@ -237,6 +242,7 @@ def scan(lignes: list):
                         input(sec + "...")
                     else:
                         pass
+            bon = True
         if ":" in ligne:
             NAME = ''
             verif = ligne.partition(":")[0]
