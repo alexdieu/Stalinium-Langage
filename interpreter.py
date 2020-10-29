@@ -1,6 +1,7 @@
 import sys
 import os.path
 import time
+import re
 
 print("STALINIUM V1 PAR ALEXDIEU")
 
@@ -151,6 +152,7 @@ def check_if(ligne: list) -> float:
 def scan(lignes: list):
     for ligne in lignes:
         sortie = []
+        check = ''
         bon = False
         ans = False
         split_ligne = ligne.split()
@@ -158,7 +160,51 @@ def scan(lignes: list):
             ans = False
             ans = CHEZCFIRST("montre", ligne)
             if ans == True:
-                print(" ".join(split_ligne[1:]))
+                lit = " ".join(split_ligne[1:])
+                if ":" in lit:
+                    check = lit.partition(":")[0]
+                    check = check[-1:]
+                    if check == "\\":
+                        pass
+                    else:
+                        erreurs = 0
+                        erreur = []
+                        erN = []
+                        name = lit.partition(":")[2]
+                        name = name.split()
+                        NAME = ''
+                        NAMEV = ''
+                        ende = len(name)
+                        for i in range(0, ende):
+                                NAME = NAME + '-' + name[i]
+                                if i == 0:
+                                    NAMEV = NAMEV + ':' + name[i]
+                                else:
+                                    NAMEV = NAMEV + ' ' + name[i]
+                                if NAME in variables:
+                                    erreurs = erreurs + 1
+                                    erreur.append(NAME)
+                                    erN.append(NAMEV)
+                                else:
+                                    pass
+                        if len(erreur) == 0:
+                            print("ERREUR 6 : VARIABLE N'EXISTE PAS")
+                        elif len(erreur) == 1:
+                            val = variables[erreur[0]]
+                            lit = lit.replace(NAMEV, val)
+                        elif len(erreur) == 2:
+                            print("ATTENTION : DEUX VARIABLES ONT UN NOM SIMILIAIRE AU DEBUT : "+ erN[0] +" et "+ erN[1] +" ! STALINIUM prends la première par défault ! ")
+                            val = variables[erreur[0]]
+                            lit = lit.replace(NAMEV, val)
+                        else:
+                            print("ATTENTION : PLUSIEURS VARIABLES ONT UN NOM SIMILIAIRE AU DEBUT ! STALINIUM prends la première par défault ! ")
+                            val = variables[erreur[0]]
+                            lit = lit.replace(NAMEV, val)
+                if "\\:" in lit:
+                    lit = lit.replace("\\:", ":")
+                else:
+                    pass
+                print(lit)
                 bon = True
             else:
                 pass
