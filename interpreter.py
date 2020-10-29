@@ -170,6 +170,7 @@ def scan(lignes: list):
                         erreurs = 0
                         erreur = []
                         erN = []
+                        ni = False
                         name = lit.partition(":")[2]
                         name = name.split()
                         NAME = ''
@@ -188,18 +189,24 @@ def scan(lignes: list):
                                 else:
                                     pass
                         if len(erreur) == 0:
+                            ni = True
                             print("ERREUR 6 : VARIABLE N'EXISTE PAS")
-                        elif len(erreur) == 1:
+                        if len(erreur) == 1:
+                            ni = True
                             val = variables[erreur[0]]
-                            lit = lit.replace(NAMEV, val)
-                        elif len(erreur) == 2:
+                            lit = lit.replace(NAMEV, val, 1)
+                        if len(erreur) == 2:
+                            ni = True
                             print("ATTENTION : DEUX VARIABLES ONT UN NOM SIMILIAIRE AU DEBUT : "+ erN[0] +" et "+ erN[1] +" ! STALINIUM prends la première par défault ! ")
                             val = variables[erreur[0]]
-                            lit = lit.replace(NAMEV, val)
+                            lit = lit.replace(NAMEV, val, 1)
                         else:
-                            print("ATTENTION : PLUSIEURS VARIABLES ONT UN NOM SIMILIAIRE AU DEBUT ! STALINIUM prends la première par défault ! ")
-                            val = variables[erreur[0]]
-                            lit = lit.replace(NAMEV, val)
+                            if ni == False:
+                                print("ATTENTION : PLUSIEURS VARIABLES ONT UN NOM SIMILIAIRE AU DEBUT ! STALINIUM prends la première par défault ! ")
+                                val = variables[erreur[0]]
+                                lit = lit.replace(NAMEV, val, 1)
+                            else:
+                                pass
                 if "\\:" in lit:
                     lit = lit.replace("\\:", ":")
                 else:
