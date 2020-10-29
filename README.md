@@ -16,6 +16,10 @@ salut mon pote
 ```
 POUR PLUS D'AIDE , REGARDEZ MAIN.CCCP ET VOUS COMPRENDREZ MIEUX LA SYNATXE
 
+## DEBUG
+
+Debug est un prog fait pour comprendre les erreurs dans le programme , comme dans l'interpréteur . Il faut s'y connaitre en python , et savoir les exceptions que l'on peut y rencontrer , pour les patcher . 
+
 CE LANGAGE EST CREE DANS LE BUT D'AIDER A COMMENCER A DEVELOPPER , IL EST EXTREMENT SIMPLE , PASSEZ Y 20 MIN SI VOUS N'AVEZ JAMAIS TOUCHE UNE LIGNE DE CODE CELA POURRAIT VOUS AIDER A VOUS LANCER DANS VOTRE LANGAGE DE PROGRAMMATION
 
 TESTEZ ONLINE : https://repl.it/@alexdieuveult/Stalinium-Langage#main.py
