@@ -160,7 +160,7 @@ def scan(lignes: list):
         if "calcul" in ligne:
             print(ligne)
             ans = False
-            ans = CHEZCFIRST("si", ligne)
+            ans = CHEZCFIRST("calcul", ligne)
             if ans == True:
                 print(calc(split_ligne))
                 bon = True
