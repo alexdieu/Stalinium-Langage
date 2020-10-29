@@ -229,12 +229,14 @@ def scan(lignes: list):
                 except:
                     input("Pause ...")
                 if pause == True:
+                    sec = sec[1:]
                     if prem.isspace() == True:
                         input(sec + "...")
                     elif prem == '' or prem == None:
                         input(sec + "...")
                     else:
                         pass
+            bon = True
         if ":" in ligne:
             NAME = ''
             verif = ligne.partition(":")[0]
