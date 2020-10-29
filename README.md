@@ -9,7 +9,7 @@ Ce langage est un langage très simple , avec pour l'instant 6 instructions :
 - **SORTIR** , sors du code et de l'interpréteur ```SORTIR```
 - **DORS** , attendre .  syntaxe : DORS secondes {optionnel : afficher quelquechose a la fin du temps} exemple:``` dors 4 ```Autre exemple: (l'argument de fin agi comme ```MONTRE```) ```dors 5 dormir 5 sec```
 - **PAUSE** , attends que l'utilisateur tape la touche entrée pour continuer , syntaxe : pause {raison} exemple : ```pause``` ou ```pause ceci est une pause```
-- **:** , definir une variable ou la montrer exemples : ```:D = SALUT/BONJOUR MON POTE : chuis de , bonne, humeur ! (:``` et pour la montrer : ```:D```
+- ```:``` , definir une variable ou la montrer exemples : ```:D = SALUT/BONJOUR MON POTE : chuis de , bonne, humeur ! (:``` et pour la montrer : ```:D```
 
 POUR PLUS D'AIDE , REGARDEZ MAIN.CCCP ET VOUS COMPRENDREZ MIEUX LA SYNATXE
 
