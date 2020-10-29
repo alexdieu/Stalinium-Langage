@@ -232,6 +232,8 @@ def scan(lignes: list):
                     input("Pause ...")
                     print(str(e))
                 if pause == True:
+                    bon = True
+                    sec = sec[1:]
                     if prem.isspace() == True:
                         input(sec + "...")
                     elif prem == '' or prem == None:
