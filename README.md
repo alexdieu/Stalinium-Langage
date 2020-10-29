@@ -30,6 +30,7 @@ STALINIUM DEBUGGER V1 PAR ALEXDIEU
 montre Salut, STALINE!
 Salut, STALINE!
 calcul 3 ** 3
+9
 si 6 <= 8
 Vrai
 ron pisch
