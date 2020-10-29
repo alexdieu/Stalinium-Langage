@@ -13,7 +13,7 @@ if len(sys.argv) > 1:
 else:
     file = input(">>>")
 
-
+variables = {}
 
 lignes = []
 
@@ -235,6 +235,58 @@ def scan(lignes: list):
                         input(sec + "...")
                     else:
                         pass
+        if ":" in ligne:
+            NAME = ''
+            verif = ligne.partition(":")[0]
+            if verif == '' or verif.isspace() == True:
+                try:
+                    verif2 = ligne.partition("=")[2]
+                    if verif2 == '' or verif2.isspace() == True:
+                        try:
+                            namevar = ligne.partition(":")[2]
+                            namevar = namevar.split()
+                            ende = len(namevar)
+                            for i in range(0, ende):
+                                NAME = NAME + '-' + namevar[i]
+                            try:
+                                print(variables[NAME])
+                            except:
+                                print("ERREUR 6 VARIABLE N'EXISTE PAS")
+                        except:
+                            print("ERREUR 6 VARIABLE NON DEFINIE !")
+                    else:
+                        namevar = ligne.partition(":")[2]
+                        namevar = namevar.split()
+                        ende = len(namevar)
+                        stop = 100000
+                        NAME = ''
+                        STOCK = ''
+                        if namevar[0] == '=':
+                            print("ERREUR 6 NOM DE VARIABLE NON DEFINIE")
+                        else:
+                            for i in range(0, ende):
+                                if namevar[i] == '=':
+                                    stop = i
+                                elif stop < i:
+                                    pass
+                                else:
+                                    NAME = NAME + '-' + namevar[i]
+                            for i in range(0, ende):
+                                if i <= stop:
+                                    pass
+                                elif stop + 1 == i:
+                                    STOCK = STOCK + namevar[i]
+                                else:
+                                    STOCK = STOCK + ' ' + namevar[i]
+                            try:
+                                variables[NAME] = STOCK
+                            except:
+                                print("ERREUR ?? : erreur inconnue")
+                                
+                except:
+                    print("ERREUR 6 VARIABLE N'A PAS DE DEFINITION")
+            else:
+                pass
         else:
             if "if" in ligne:
                 if bon == True:
