@@ -149,6 +149,7 @@ def scan(lignes: list):
         ans = False
         split_ligne = ligne.split()
         if "montre" in ligne:
+            print(ligne)
             ans = False
             ans = CHEZCFIRST("montre", ligne)
             if ans == True:
@@ -157,6 +158,7 @@ def scan(lignes: list):
             else:
                 pass
         if "calcul" in ligne:
+            print(ligne)
             ans = False
             ans = CHEZCFIRST("si", ligne)
             if ans == True:
@@ -165,6 +167,7 @@ def scan(lignes: list):
             else:
                 pass
         if "si" in ligne:
+            print(ligne)
             ans = False
             ans = CHEZCFIRST("si", ligne)
             if ans == True:
@@ -173,6 +176,7 @@ def scan(lignes: list):
             else:
                 pass
         if "sortir" in ligne:
+            print(ligne)
             ans = False
             exitp = False
             sec = ''
@@ -225,15 +229,12 @@ def scan(lignes: list):
                 try:
                     prem = ligne.partition("pause")[0]
                     sec = ligne.partition("pause")[2]
-                    print(prem)
-                    print(sec)
                     pause = True
                 except Exception as e:
                     input("Pause ...")
                     print(str(e))
                 if pause == True:
                     bon = True
-                    sec = sec[1:]
                     if prem.isspace() == True:
                         input(sec + "...")
                     elif prem == '' or prem == None:
@@ -284,8 +285,11 @@ def scan(lignes: list):
                             for i in range(0, ende):
                                 if i <= stop:
                                     pass
-                                else:
+                                elif stop + 1 == i:
                                     STOCK = STOCK + namevar[i]
+                                    print(STOCK)
+                                else:
+                                    STOCK = STOCK + ' ' + namevar[i]
                                     print(STOCK + ' == stock')
                             try:
                                 variables[NAME] = STOCK
