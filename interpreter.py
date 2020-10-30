@@ -394,11 +394,16 @@ def scan(lignes: list):
                 
 if ".cccp" in file:
     lignes = []
-    with open(file, "r") as f:
+    if os.path.isfile(file):
+        with open(file, "r") as f:
             for index, value in enumerate(f.readlines()):
                 lignes.append(value.strip("\n"))
                 lignes = [i for i in lignes if i] 
             scan(lignes)
+    else:
+        lignes.append(file)
+        scan(lignes)
+    
 else:
     lignes = []
     lignes.append(file)
@@ -410,11 +415,16 @@ while True:
     file = input(">>>")
     lignes = []
     if ".cccp" in file:
-        with open(file, "r") as f:
-            for index, value in enumerate(f.readlines()):
-                lignes.append(value.strip("\n"))
-                lignes = [i for i in lignes if i] 
-        scan(lignes)
+        lignes = []
+        if os.path.isfile(file):
+            with open(file, "r") as f:
+                for index, value in enumerate(f.readlines()):
+                    lignes.append(value.strip("\n"))
+                    lignes = [i for i in lignes if i] 
+                scan(lignes)
+        else:
+            lignes.append(file)
+            scan(lignes)
     else:
         lignes.append(file)
         scan(lignes)
