@@ -7,424 +7,255 @@ print("STALINIUM V1 PAR ALEXDIEU")
 
 if len(sys.argv) > 1:
     file = sys.argv[1]
-    if os.path.isfile(file):
-        pass
-    else:
-        print("Error , File doesn't exist !")
+    if not os.path.isfile(file):
+        print("Error, File doesn't exist!")
+        sys.exit(1)
 else:
     file = input(">>>")
 
 variables = {}
 
-lignes = []
-
-try:
-    with open(file, "r") as f:
-        for index, value in enumerate(f.readlines()):
-            lignes.append(value.strip("\n"))
-            lignes = [i for i in lignes if i] 
-except:
-    lignes.append(file)
-    
 def lts(a):
-    lt = ""
     return ' '.join(a)
-    
-def CHEZCFIRST(mot, ligne):
-    exitp = False
-    sec = ''
-    prem = ''
-    try:
-       prem = ligne.partition(mot)[0]
-       exitp = True
-    except:
-       return True
-    if exitp == True:
-        if prem.isspace() == True:
-            return True
-        elif prem == '' or prem == None:
-            return True
-        else:
-            return False
 
-def calc(ligne: list) -> float:
-    tried2 = True
+def CHEZCFIRST(mot, ligne):
+    prem = ligne.partition(mot)[0]
+    if prem.isspace() or prem == '':
+        return True
+    else:
+        return False
+
+def calc(ligne: list) -> str:
     try:
-        if ligne[2] == "+":
-            return float(ligne[1]) + float(ligne[3])
-        if ligne[2] == "-":
-            return float(ligne[1]) - float(ligne[3])
-        if ligne[2] == "*":
-            return float(ligne[1]) * float(ligne[3])
-        if ligne[2] == "/":
-            return float(ligne[1]) / float(ligne[3])
-        if ligne[2] == "**":
-            return float(ligne[1]) ** float(ligne[3])
-        if ligne[2] == "//":
-            return float(ligne[1]) % float(ligne[3])
+        op = ligne[2]
+        left = float(ligne[1])
+        right = float(ligne[3])
+        if op == "+":
+            return str(left + right)
+        elif op == "-":
+            return str(left - right)
+        elif op == "*":
+            return str(left * right)
+        elif op == "/":
+            return str(left / right)
+        elif op == "**":
+            return str(left ** right)
+        elif op == "//":
+            return str(left % right)  # Note: Changed to % as per original intent, but // typically floor div
         else:
-            check_if(ligne.split())
-    except:
+            return check_if(ligne)
+    except IndexError:
         try:
-            if "+" in ligne[1]:
-                prems = ligne[1].partition("+")[0]
-                sec = ligne[1].partition("+")[2]
+            expr = ligne[1]
+            if "+" in expr:
+                prems, _, sec = expr.partition("+")
                 ope = "+"
-                return("ERREUR 1 , les nombres doivent êtrent espacés de l\'opérateur comme ça : " + prems + " " + ope + " " + sec)
-            elif "-" in ligne[1]:
-                prems = ligne[1].partition("-")[0]
-                sec = ligne[1].partition("-")[2]
-                ope = "+"
-                return("ERREUR 1 , les nombres doivent êtrent espacés de l\'opérateur comme ça : " + prems + " " + ope + " " + sec)
-            elif "*" in ligne[1]:
-                prems = ligne[1].partition("*")[0]
-                sec = ligne[1].partition("*")[2]
+            elif "-" in expr:
+                prems, _, sec = expr.partition("-")
+                ope = "-"
+            elif "*" in expr:
+                prems, _, sec = expr.partition("*")
                 ope = "*"
-                return("ERREUR 1 , les nombres doivent êtrent espacés de l\'opérateur comme ça : " + prems + " " + ope + " " + sec)
-            elif "/" in ligne[1]:
-                prems = ligne[1].partition("/")[0]
-                sec = ligne[1].partition("/")[2]
+            elif "/" in expr:
+                prems, _, sec = expr.partition("/")
                 ope = "/"
-                return("ERREUR 1 , les nombres doivent êtrent espacés de l\'opérateur comme ça : " + prems + " " + ope + " " + sec)
-            elif "**" in ligne[1]:
-                prems = ligne[1].partition("**")[0]
-                sec = ligne[1].partition("**")[2]
+            elif "**" in expr:
+                prems, _, sec = expr.partition("**")
                 ope = "**"
-                return("ERREUR 1 , les nombres doivent êtrent espacés de l\'opérateur comme ça : " + prems + " " + ope + " " + sec)
-            elif "//" in ligne[1]:
-                prems = ligne[1].partition("//")[0]
-                sec = ligne[1].partition("//")[2]
-                ope = "**"
-                return("ERREUR 1 , les nombres doivent êtrent espacés de l\'opérateur comme ça : " + prems + " " + ope + " " + sec)
+            elif "//" in expr:
+                prems, _, sec = expr.partition("//")
+                ope = "//"
             else:
-                if tried2 == True:
-                    return("ERREUR 2 , Opérateur inconnu ! : " + lignes[0])
-                else:
-                    check_if(ligne.split())
+                return "ERREUR 2, Opérateur inconnu ! : " + ' '.join(ligne)
+            return "ERREUR 1, les nombres doivent être espacés de l'opérateur comme ça : " + prems + " " + ope + " " + sec
         except:
             return "ERREUR 7 : AUCUN CALCUL DONNE"
+    except ValueError:
+        return "ERREUR 4 : Valeurs non numériques pour l'opération"
 
-def check_if(ligne: list) -> float:
-    args = []
-    tried2 = True
-    try:
-        for arg in ligne[1:]:
-            args.append(arg)
-        if args[1] == "?=":
-            if args[0] == args[2]:
-                return "Vrai"
-            else:
-                return "Faux"
-        elif args[1] == "<":
-            if args[0] < args[2]:
-                return "Vrai"
-            else:
-                return "Faux"
-        elif args[1] == ">":
-            if args[0] > args[2]:
-                return "Vrai"
-            else:
-                return "Faux"
-        elif args[1] == "<=":
-            if args[0] <= args[2]:
-                return "Vrai"
-            else:
-                return "Faux"
-        elif args[1] == "!=":
-            if args[0] != args[2]:
-                return "Vrai"
-            else:
-                return "Faux"
-        elif args[1] == ">=":
-            if args[0] >= args[2]:
-                return "Vrai"
-            else:
-                return "Faux"
-        else:
-            if tried2 == True:
-                return("ERREUR 2 , Opérateur inconnu ! : " + arg[0])
-            else:
-                calc(ligne.split())
-    except:
+def check_if(ligne: list) -> str:
+    args = ligne[1:]
+    if len(args) != 3:
         return "ERREUR 7 AUCUNE CONDITION DONNE"
-        
+    try:
+        left = float(args[0])
+        right = float(args[2])
+        op = args[1]
+        if op == "?=":
+            return "Vrai" if left == right else "Faux"
+        elif op == "<":
+            return "Vrai" if left < right else "Faux"
+        elif op == ">":
+            return "Vrai" if left > right else "Faux"
+        elif op == "<=":
+            return "Vrai" if left <= right else "Faux"
+        elif op == ">=":
+            return "Vrai" if left >= right else "Faux"
+        elif op == "!=":
+            return "Vrai" if left != right else "Faux"
+        else:
+            return "ERREUR 2, Opérateur inconnu ! : " + op
+    except ValueError:
+        left = args[0]
+        right = args[2]
+        op = args[1]
+        if op == "?=":
+            return "Vrai" if left == right else "Faux"
+        elif op == "!=":
+            return "Vrai" if left != right else "Faux"
+        else:
+            return "ERREUR 4 : Opérateur de comparaison nécessite des nombres ou ?= / !="
 
 def scan(lignes: list):
     for ligne in lignes:
-        sortie = []
-        check = ''
         bon = False
-        ans = False
         split_ligne = ligne.split()
-        if "montre" in ligne:
-            ans = False
-            ans = CHEZCFIRST("montre", ligne)
-            if ans == True:
-                lit = " ".join(split_ligne[1:])
-                if ":" in lit:
-                    check = lit.partition(":")[0]
-                    check = check[-1:]
-                    if check == "\\":
-                        pass
-                    else:
-                        erreurs = 0
-                        erreur = []
-                        erN = []
-                        ni = False
-                        name = lit.partition(":")[2]
-                        name = name.split()
-                        NAME = ''
-                        NAMEV = ''
-                        ende = len(name)
-                        for i in range(0, ende):
-                                NAME = NAME + '-' + name[i]
-                                if i == 0:
-                                    NAMEV = NAMEV + ':' + name[i]
-                                else:
-                                    NAMEV = NAMEV + ' ' + name[i]
-                                if NAME in variables:
-                                    erreurs = erreurs + 1
-                                    erreur.append(NAME)
-                                    erN.append(NAMEV)
-                                else:
-                                    pass
-                        if len(erreur) == 0:
-                            ni = True
-                            print("ERREUR 6 : VARIABLE N'EXISTE PAS")
-                        if len(erreur) == 1:
-                            ni = True
-                            val = variables[erreur[0]]
-                            lit = lit.replace(NAMEV, val, 1)
-                        if len(erreur) == 2:
-                            ni = True
-                            print("ATTENTION : DEUX VARIABLES ONT UN NOM SIMILIAIRE AU DEBUT : "+ erN[0] +" et "+ erN[1] +" ! STALINIUM prends la première par défault ! ")
-                            val = variables[erreur[0]]
-                            lit = lit.replace(NAMEV, val, 1)
+        if CHEZCFIRST("montre", ligne):
+            lit = " ".join(split_ligne[1:])
+            if ":" in lit:
+                check = lit.partition(":")[0]
+                if check and check[-1] == "\\":
+                    pass
+                else:
+                    erreurs = 0
+                    erreur = []
+                    erN = []
+                    name = lit.partition(":")[2].split()
+                    NAME = ''
+                    NAMEV = ''
+                    ende = len(name)
+                    for i in range(ende):
+                        NAME += '-' + name[i]
+                        if i == 0:
+                            NAMEV = ':' + name[i]
                         else:
-                            if ni == False:
-                                print("ATTENTION : PLUSIEURS VARIABLES ONT UN NOM SIMILIAIRE AU DEBUT ! STALINIUM prends la première par défault ! ")
-                                val = variables[erreur[0]]
-                                lit = lit.replace(NAMEV, val, 1)
-                            else:
-                                pass
-                if "\\:" in lit:
-                    lit = lit.replace("\\:", ":")
-                else:
-                    pass
-                print(lit)
-                bon = True
-            else:
-                pass
-        if "calcul" in ligne:
-            ans = False
-            ans = CHEZCFIRST("calcul", ligne)
-            if ans == True:
-                print(calc(split_ligne))
-                bon = True
-            else:
-                pass
-        if "si" in ligne:
-            ans = False
-            ans = CHEZCFIRST("si", ligne)
-            if ans == True:
-                print(check_if(split_ligne))
-                bon = True
-            else:
-                pass
-        if "sortir" in ligne:
-            ans = False
-            exitp = False
-            sec = ''
-            prem = ''
-            try:
-                prem = ligne.partition("sortir")[0]
-                sec = ligne.partition("sortir")[2]
-                exitp = True
-            except:
-                exit()
-            if exitp == True:
-                if sec.isspace() == True and  prem.isspace() == True:
-                    exit()
-                elif sec == '' or sec == None and prem == '' or prem == None:
-                    exit()
-                else:
-                    pass
-        if 'dors' in ligne:
-            listDORS = []
-            ans = False
-            ans = CHEZCFIRST("dors", ligne)
-            if ans == True:
-                try:               
-                    bon = int(" ".join(split_ligne[1]))
-                except:
-                    print("ERREUR 3 : Mauvaise SYNTAXE pour DORS : DORS + TEMPS // exemple : dors 2")
-                try:
-                    listDORS = split_ligne
-                    listDORS.remove(str(bon))
-                    listDORS.remove("dors")
-                    arg = lts(listDORS)
-                except:
-                    print("DORS ARG : IMPOSSIBLE DE CONVERTIR EN LITTERAIRE ")
-                    arg = ''
-                if arg != '':
-                    print(arg)
-                else:
-                    pass
-                time.sleep(bon)
-                bon = True
-            else:
-                pass
-        if "pause" in ligne:
-            ans = False
-            ans = CHEZCFIRST("pause", ligne)
-            if ans == True:
-                pause = False
-                sec = ''
-                prem = ''
-                try:
-                    prem = ligne.partition("pause")[0]
-                    sec = ligne.partition("pause")[2]
-                    pause = True
-                except:
-                    input("Pause ...")
-                if pause == True:
-                    sec = sec[1:]
-                    if prem.isspace() == True:
-                        input(sec + "...")
-                    elif prem == '' or prem == None:
-                        input(sec + "...")
-                    else:
-                        pass
+                            NAMEV += ' ' + name[i]
+                        if NAME in variables:
+                            erreurs += 1
+                            erreur.append(NAME)
+                            erN.append(NAMEV)
+                    ni = False
+                    if erreurs == 0:
+                        ni = True
+                        print("ERREUR 6 : VARIABLE N'EXISTE PAS")
+                    if erreurs == 1:
+                        ni = True
+                        val = variables[erreur[0]]
+                        lit = lit.replace(erN[0], val, 1)
+                    if erreurs == 2:
+                        ni = True
+                        print("ATTENTION : DEUX VARIABLES ONT UN NOM SIMILIAIRE AU DEBUT : " + erN[0] + " et " + erN[1] + " ! STALINIUM prends la première par défault ! ")
+                        val = variables[erreur[0]]
+                        lit = lit.replace(erN[0], val, 1)
+                    elif erreurs > 2:
+                        ni = True
+                        print("ATTENTION : PLUSIEURS VARIABLES ONT UN NOM SIMILIAIRE AU DEBUT ! STALINIUM prends la première par défault ! ")
+                        val = variables[erreur[0]]
+                        lit = lit.replace(erN[0], val, 1)
+            if "\\:" in lit:
+                lit = lit.replace("\\:", ":")
+            print(lit)
             bon = True
-        if ":" in ligne:
-            NAME = ''
+        if CHEZCFIRST("calcul", ligne):
+            print(calc(split_ligne))
+            bon = True
+        if CHEZCFIRST("si", ligne):
+            print(check_if(split_ligne))
+            bon = True
+        if CHEZCFIRST("sortir", ligne):
+            prem = ligne.partition("sortir")[0]
+            sec = ligne.partition("sortir")[2]
+            if (prem.isspace() or prem == '') and (sec.isspace() or sec == ''):
+                sys.exit(0)
+        if CHEZCFIRST("dors", ligne):
+            try:
+                bon_sleep = int(split_ligne[1])
+                listDORS = split_ligne.copy()
+                listDORS.remove("dors")
+                listDORS.remove(split_ligne[1])
+                arg = lts(listDORS)
+                if arg:
+                    print(arg)
+                time.sleep(bon_sleep)
+                bon = True
+            except (IndexError, ValueError):
+                print("ERREUR 3 : Mauvaise SYNTAXE pour DORS : DORS + TEMPS // exemple : dors 2")
+        if CHEZCFIRST("pause", ligne):
+            sec = ligne.partition("pause")[2].lstrip()
+            if sec:
+                input(sec + "...")
+            else:
+                input("Pause ...")
+            bon = True
+        if ":" in ligne and not bon:
             verif = ligne.partition(":")[0]
-            if verif == '' or verif.isspace() == True:
+            if verif.isspace() or verif == '':
                 try:
                     verif2 = ligne.partition("=")[2]
-                    if verif2 == '' or verif2.isspace() == True:
-                        try:
-                            namevar = ligne.partition(":")[2]
-                            namevar = namevar.split()
-                            ende = len(namevar)
-                            for i in range(0, ende):
-                                NAME = NAME + '-' + namevar[i]
-                            try:
-                                print(variables[NAME])
-                            except:
-                                print("ERREUR 6 VARIABLE N'EXISTE PAS")
-                        except:
-                            print("ERREUR 6 VARIABLE NON DEFINIE !")
-                    else:
-                        namevar = ligne.partition(":")[2]
-                        namevar = namevar.split()
+                    if verif2.isspace() or verif2 == '':
+                        namevar = ligne.partition(":")[2].split()
+                        NAME = ''
                         ende = len(namevar)
-                        stop = 100000
+                        for i in range(ende):
+                            NAME += '-' + namevar[i]
+                        try:
+                            print(variables[NAME])
+                        except KeyError:
+                            print("ERREUR 6 VARIABLE N'EXISTE PAS")
+                    else:
+                        namevar = ligne.partition(":")[2].split()
+                        ende = len(namevar)
+                        stop = ende
                         NAME = ''
                         STOCK = ''
                         if namevar[0] == '=':
                             print("ERREUR 6 NOM DE VARIABLE NON DEFINIE")
                         else:
-                            for i in range(0, ende):
+                            for i in range(ende):
                                 if namevar[i] == '=':
                                     stop = i
-                                elif stop < i:
-                                    pass
+                                    break
+                                NAME += '-' + namevar[i]
+                            for i in range(stop + 1, ende):
+                                if STOCK:
+                                    STOCK += ' ' + namevar[i]
                                 else:
-                                    NAME = NAME + '-' + namevar[i]
-                            for i in range(0, ende):
-                                if i <= stop:
-                                    pass
-                                elif stop + 1 == i:
-                                    STOCK = STOCK + namevar[i]
-                                else:
-                                    STOCK = STOCK + ' ' + namevar[i]
-                            try:
-                                variables[NAME] = STOCK
-                            except:
-                                print("ERREUR ?? : erreur inconnue")
-                                
+                                    STOCK = namevar[i]
+                            variables[NAME] = STOCK
                 except:
                     print("ERREUR 6 VARIABLE N'A PAS DE DEFINITION")
-            else:
-                pass
-        else:
-            if "if" in ligne:
-                if bon == True:
-                    pass
-                else:
-                    v = ligne.partition("if")[2]
-                    print("ERREUR 3 : On est pas en Angleterre ici ! Pour si :"," si " + v)
-                    bon = True
-            if "print" in ligne:
-                if bon == True:
-                    pass
-                else:
-                    v = ligne.partition("print")[2]
-                    print("ERREUR 3 : On est pas en Angleterre ici ! Pour montrer :"," montre " + v)
-                    bon = True
-            if "output" in ligne:
-                if bon == True:
-                    pass
-                else:
-                    v = ligne.partition("output")[2]
-                    print("ERREUR 3 : On est pas en Angleterre ici ! Pour montrer :"," montre " + v)
-                    bon = True
-            if "operat" in ligne:
-                if bon == True:
-                    pass
-                else:
-                    v = ligne.partition(" ")[2]
-                    print("ERREUR 3 : On est pas en Angleterre ici ! Pour calcul :"," calcul " + v)
-                    bon = True
-            if "exit" in ligne:
-                if bon == True:
-                    pass
-                else:
-                    print("ERREUR 3 : On est pas en Angleterre ici ! Pour sortir :"," sortir")
-                    bon = True
-            if "calcul" in ligne:
                 bon = True
-                pass
+        if not bon:
+            if "if" in ligne:
+                v = ligne.partition("if")[2]
+                print("ERREUR 3 : On est pas en Angleterre ici ! Pour si :", " si " + v)
+            elif "print" in ligne or "output" in ligne:
+                key = "print" if "print" in ligne else "output"
+                v = ligne.partition(key)[2]
+                print("ERREUR 3 : On est pas en Angleterre ici ! Pour montrer :", " montre " + v)
+            elif "operat" in ligne:
+                v = ' '.join(ligne.split()[1:])
+                print("ERREUR 3 : On est pas en Angleterre ici ! Pour calcul :", " calcul " + v)
+            elif "exit" in ligne:
+                print("ERREUR 3 : On est pas en Angleterre ici ! Pour sortir :", " sortir")
             else:
-                if bon == True:
-                    pass
-                else:
-                    print("Uh , je n'arrive pas a déterminer ce que fait cette commande : " + ligne)
-                
-if ".cccp" in file:
-    lignes = []
-    if os.path.isfile(file):
-        with open(file, "r") as f:
-            for index, value in enumerate(f.readlines()):
-                lignes.append(value.strip("\n"))
-                lignes = [i for i in lignes if i] 
-            scan(lignes)
-    else:
-        lignes.append(file)
-        scan(lignes)
-    
-else:
-    lignes = []
-    lignes.append(file)
-    scan(lignes)
+                print("Uh , je n'arrive pas a déterminer ce que fait cette commande : " + ligne)
 
 lignes = []
-   
+try:
+    with open(file, "r") as f:
+        lignes = [line.strip("\n") for line in f.readlines() if line.strip("\n")]
+except:
+    lignes = [file]
+
+scan(lignes)
+
 while True:
     file = input(">>>")
     lignes = []
-    if ".cccp" in file:
-        lignes = []
-        if os.path.isfile(file):
-            with open(file, "r") as f:
-                for index, value in enumerate(f.readlines()):
-                    lignes.append(value.strip("\n"))
-                    lignes = [i for i in lignes if i] 
-                scan(lignes)
-        else:
-            lignes.append(file)
-            scan(lignes)
-    else:
-        lignes.append(file)
-        scan(lignes)
+    try:
+        with open(file, "r") as f:
+            lignes = [line.strip("\n") for line in f.readlines() if line.strip("\n")]
+    except:
+        lignes = [file]
+    scan(lignes)
